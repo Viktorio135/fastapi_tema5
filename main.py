@@ -3,7 +3,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from redis.asyncio import Redis
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from pytz import timezone
 
 
 from middlewares import ChachMiddleware
@@ -25,9 +24,7 @@ async def lifespan(app):
 
     scheduler.add_job(
         clear_cache,
-        trigger=CronTrigger(hour=21,
-                            minute=57,
-                            timezone=timezone("Europe/Moscow"))
+        trigger=CronTrigger(hour=14, minute=11)
     )
 
     scheduler.start()
