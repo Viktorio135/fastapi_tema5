@@ -75,7 +75,7 @@ async def get_dynamics(filters: GetDynamicsFilters = Depends(),
                        repo: SpimexTradingRepository = Depends(get_user_repo)):
     result = await repo.get_dynamics(
         session,
-        **filters.model_dump(exclude_unset=True)
+        filters.model_dump(exclude_unset=True)
     )
     return result
 
