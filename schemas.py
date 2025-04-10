@@ -34,11 +34,11 @@ class SpimexTradingResponse(SpimexTradingBase):
         from_attributes = True
 
 
-class TradingDateResponse(BaseModel):
-    date: date
+# class TradingDateResponse(BaseModel):
+#     date: date
 
-    class Config:
-        from_attributes = True
+#     class Config:
+#         from_attributes = True
 
 
 class GetDynamicsFilters(BaseModel):
@@ -47,7 +47,7 @@ class GetDynamicsFilters(BaseModel):
     delivery_basis_id: Optional[str] = Field(None, max_digits=3)
     start_date: date
     end_date: date
-    
+
 
 class GetTradingResults(BaseModel):
     oil_id: Optional[str] = Field(None, max_length=4)

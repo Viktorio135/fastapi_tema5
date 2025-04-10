@@ -6,6 +6,9 @@ from .models import SpimexTradingResults
 
 
 class BaseRepository:
+    """
+    Тут можно реализовать базовые методы, но по ТЗ они не нужны(
+    """
     def __init__(self, model):
         self.model = model
 
@@ -26,10 +29,16 @@ class BaseRepository:
 
 
 class SpimexTradingRepository(BaseRepository):
+    """
+    Репозиторий для модели SpimexTradingResults
+    """
     def __init__(self):
         super().__init__(SpimexTradingResults)
 
     def _apply_filters(self, query, filters):
+        """
+        Включение необходимых фильтров в query
+        """
         oil_id = filters.get('oil_id', None)
         delivery_type_id = filters.get('delivery_type_id', None)
         delivery_basis_id = filters.get('delivery_basis_id', None)
