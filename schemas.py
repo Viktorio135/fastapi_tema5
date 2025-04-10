@@ -32,10 +32,6 @@ class SpimexTradingResponse(SpimexTradingBase):
 
     class Config:
         from_attributes = True
-        # json_encoders = {
-        #     datetime: lambda v: v.isoformat(),
-        #     date: lambda v: v.isoformat()
-        # }
 
 
 class TradingDateResponse(BaseModel):
@@ -52,3 +48,8 @@ class GetDynamicsFilters(BaseModel):
     start_date: date
     end_date: date
     
+
+class GetTradingResults(BaseModel):
+    oil_id: Optional[str] = Field(None, max_length=4)
+    delivery_type_id: Optional[str] = Field(None, max_length=1)
+    delivery_basis_id: Optional[str] = Field(None, max_digits=3)

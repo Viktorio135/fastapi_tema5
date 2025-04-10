@@ -3,10 +3,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.database import engine, Base, get_db
 from database.repositories import SpimexTradingRepository
-from schemas import TradingDateResponse, GetDynamicsFilters
+from schemas import TradingDateResponse, GetDynamicsFilters, GetTradingResults
 
 
 app = FastAPI()
+
 
 def get_user_repo():
     return SpimexTradingRepository()
@@ -31,6 +32,17 @@ async def get_dynamics(filters: GetDynamicsFilters = Depends(),
     )
     return result
 
+
+@app.get('/get_trading_results')
+async def get_trading_results(filters: GetTradingResults = Depends(),
+                              session: AsyncSession = Depends(get_db),
+                              repo: SpimexTradingRepository = Depends(get_user_repo)):
+    result = await repo.get_trading_results(
+        session,
+        filters.model_dump(exclude_unset=True)
+    )
+
+    return result
 
 
 async def lifespan(app):
