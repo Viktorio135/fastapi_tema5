@@ -4,20 +4,20 @@ from fastapi.responses import Response
 from starlette.middleware.base import BaseHTTPMiddleware
 
 
-class ChachMiddleware(BaseHTTPMiddleware):
+class CacheMiddleware(BaseHTTPMiddleware):
     """
     Middleware для кэширования запросов
     """
     async def dispatch(self, request, call_next):
         redis_client = request.app.state.redis_client
 
-        chach_name = f"{request.url.path}?{request.url.query}"
+        cache_name = f"{request.url.path}?{request.url.query}"
 
-        chach = await redis_client.get(chach_name)
+        cache = await redis_client.get(cache_name)
 
-        if chach:
+        if cache:
             return Response(
-                content=json.loads(chach),
+                content=json.loads(cache),
                 media_type='application/json'
             )
 
@@ -28,7 +28,7 @@ class ChachMiddleware(BaseHTTPMiddleware):
         else:
             body = b"".join([chunk async for chunk in response.body_iterator])
 
-        await redis_client.set(chach_name, json.dumps(body.decode()))
+        await redis_client.set(cache_name, json.dumps(body.decode()))
 
         return Response(
                 content=body,

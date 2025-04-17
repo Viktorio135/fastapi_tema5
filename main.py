@@ -1,16 +1,18 @@
 from fastapi import FastAPI, Query, Depends
+from contextlib import asynccontextmanager
 from sqlalchemy.ext.asyncio import AsyncSession
 from redis.asyncio import Redis
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
 
-from middlewares import ChachMiddleware
+from middlewares import CacheMiddleware
 from database.database import engine, Base, get_db
 from database.repositories import SpimexTradingRepository
 from schemas import GetDynamicsFilters, GetTradingResults
 
 
+@asynccontextmanager
 async def lifespan(app):
     """
     Создание моделей базы, подключение Redis и определение шедулера
@@ -41,7 +43,7 @@ app = FastAPI(lifespan=lifespan)
 redis_client: Redis | None = None
 scheduler = AsyncIOScheduler()
 
-app.add_middleware(ChachMiddleware)
+app.add_middleware(CacheMiddleware)
 
 
 async def clear_cache():

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, computed_field, Field
+from pydantic import BaseModel, ConfigDict, computed_field, Field
 from datetime import date, datetime
 from typing import Optional
 
@@ -30,15 +30,7 @@ class SpimexTradingResponse(SpimexTradingBase):
     def delivery_type_id(self) -> str:
         return self.exchange_product_id[-1]
 
-    class Config:
-        from_attributes = True
-
-
-# class TradingDateResponse(BaseModel):
-#     date: date
-
-#     class Config:
-#         from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class GetDynamicsFilters(BaseModel):
