@@ -14,7 +14,6 @@ class CacheMiddleware(BaseHTTPMiddleware):
         cache_name = f"{request.url.path}?{request.url.query}"
 
         cache = await redis_client.get(cache_name)
-
         if cache:
             return Response(
                 content=json.loads(cache),

@@ -84,7 +84,6 @@ class SpimexTradingRepository(BaseRepository):
                            session: AsyncSession,
                            filters: dict
                            ) -> list[SpimexTradingResults]:
-
         query = select(self.model)
         filters_query = self._apply_filters(query, filters)
 
@@ -93,7 +92,7 @@ class SpimexTradingRepository(BaseRepository):
 
     async def get_trading_results(self,
                                   session: AsyncSession,
-                                  filters: str
+                                  filters: dict = {}
                                   ) -> list[SpimexTradingResults]:
         date_query = select(self.model.date).order_by(desc(self.model.date))
         last_date = await session.execute(date_query)

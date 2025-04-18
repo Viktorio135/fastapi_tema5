@@ -26,7 +26,7 @@ class SpimexTradingResults(Base):
     @classmethod
     def oil_id(cls):
         return func.substring(cls.exchange_product_id, 1, 4)
-    
+
     @hybrid_method
     def delivery_basis_id(self):
         return self.exchange_product_id[4:7]
@@ -35,7 +35,7 @@ class SpimexTradingResults(Base):
     @classmethod
     def delivery_basis_id(cls):
         return func.substring(cls.exchange_product_id, 5, 3)
-    
+
     @hybrid_method
     def delivery_type_id(self):
         return self.exchange_product_id[-1]
